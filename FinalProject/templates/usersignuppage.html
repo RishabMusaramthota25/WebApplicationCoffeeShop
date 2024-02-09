@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <style>
+      body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  margin: 0;
+}
+
+
+.Hello {
+  padding: 20px;
+  border: 2px solid #000;
+  border-radius: 15px;
+  height:350px; 
+}
+
+
+input[type="email"],
+input[type="password"],
+input[type="text"]{
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 10px; 
+}
+
+
+input[type="submit"] {
+  background-color: green;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+
+input[type="reset"] {
+  float: right; 
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+    </style>
+  </head>
+  <body>
+    <div class="Hello">
+      <center><h1>Registration Form</h1></center>
+      <form action="http://localhost:5000/userregistration" method="POST">
+        <table border=0>
+          <tr>
+           <td>Full Name</td><td><input type="text" name="userfullname" required></td>
+          </tr>
+          <tr>
+           <td>Contact Number</td><td><input type="text" name="usercontact" required></td>
+          </tr>
+          <tr>
+           <td>Email</td><td><input type="email" name="useremail" required></td>
+          </tr>
+          <tr>
+           <td>Password</td><td><input type="password" name="userpassword" required></td>
+          </tr>
+          
+          <tr>
+            <td><input type="submit" value="Register"></td><td><input type="reset" value="Cancel"></td>
+          </tr>
+        </table>
+      </form>
+     <center><p>Already have an account? <a href="{{ url_for('userloginpage') }}">Login</a></p></center>
+    </div>
+  </body>
+</html>

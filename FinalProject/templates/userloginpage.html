@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <style>
+   body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; 
+  margin: 0;
+}
+
+
+.Hello{
+  padding: 20px;
+  border: 2px solid #000;
+  border-radius: 15px;
+}
+
+input[type="email"],
+input[type="password"] {
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 10px; /* Add 10px of margin at the bottom of each input */
+}
+
+input[type="submit"] {
+  background-color: green;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+input[type="reset"] {
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+    </style>
+  </head>
+  <body>
+    <div class="Hello">
+      <center><h1>Login Form</h1></center>
+      <form action="http://localhost:5000/userlogin" method="POST">
+        <table border=0>
+          <tr>
+           <td>Email</td><td><input type="email" name="useremail" required></td>
+          </tr>
+          <tr>
+           <td>Password</td><td><input type="password" name="userpassword" required></td>
+          </tr>
+          <tr>
+            <td><input type="submit" value="Login"></td><td><input type="reset" value="Cancel"></td>
+          </tr>
+        </table>
+      </form>
+      <p>Don't have an account? <a href="{{ url_for('usersignuppage') }}">Register</a></p>
+    </div>
+  </body>
+</html>

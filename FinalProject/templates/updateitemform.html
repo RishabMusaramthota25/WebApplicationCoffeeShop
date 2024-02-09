@@ -1,0 +1,94 @@
+{%extends "managerheader.html" %}
+{% block content %}
+<style>
+  body {
+      font-family: Arial, sans-serif;
+  }
+
+  /* Styling for the form container */
+  .form-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+  }
+
+  .form-container h1 {
+      text-align: center;
+  }
+
+  .form-container form {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .form-container label {
+      margin-bottom: 5px;
+  }
+
+  .form-container input[type="text"],
+  .form-container input[type="number"],
+  .form-container input[type="file"] {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin-bottom: 10px;
+  }
+  
+   select{
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin-bottom: 10px;
+   }
+
+  .form-container input[type="submit"] {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+
+  .form-container input[type="submit"]:hover {
+      background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+<div class="form-container">
+  <h1>Update Item Form</h1>
+  <form action="http://localhost:5000/updateprod">
+      <label for="itemid">Item ID:</label>
+      <select name="itemid" required>
+         {% for item in result_records %}
+            <option value="{{ item[0] }}">{{ item[1] }}</option>
+         {% endfor %}
+      </select>
+      <label for="itemname">Item Name:</label>
+      <input type="text" name="itemname" required>
+
+      <label for="itemcategory">Item Category:</label>
+      <select name="ItemCategory">
+        <option value="espresso">ESPRESSO</option>
+        <option value="sandwich">SANDWICH</option>
+        <option value="pastry">PASTRY</option>
+      </select>
+    
+
+      <label for="price">Price:</label>
+      <input type="number" name="price" required>
+
+      <label for="quantity">Quantity:</label>
+      <input type="number" name="quantity" required>
+
+      
+
+      <input type="submit" value="Update">
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      a{
+        text-decoration:none;
+      }
+      
+  body {
+    margin: 0;
+    padding: 0;
+  }
+   button{
+    font-size:20px;
+    padding:10px;
+    background-color:#9fc6c6;
+    border:none;
+  }
+  .navbar {
+    position: sticky;
+    top: 0;
+    background-color: #f0f0f0;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom:15px;
+  }
+
+  .navbar a {
+    display: inline-block;
+    padding: 5px 15px;
+    color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+
+  
+
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="{{ url_for('additemform') }}"><button>Add New Item</button></a>
+      <a href="{{ url_for('updateitemform') }}"><button>Update Item</button></a>
+      <a href="orders"><button>View Orders</button></a>
+      <a href="checkinventory"><button>Check Inventory</button></a>
+      <a href="managerlogout"><button>logout</button></a>
+    </div>
+    {% block content %}{% endblock %}
+  </body>
+</html>

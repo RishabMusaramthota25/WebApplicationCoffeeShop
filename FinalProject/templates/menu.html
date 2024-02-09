@@ -1,0 +1,255 @@
+<html>
+  <head>
+<style>
+  nav {
+   position:fixed;
+   top:0;
+   left:0;
+   width:100%;
+   z-index:100;
+  display:flex;
+  
+  background-color:#b3ffff;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  overflow:hidden;
+ 
+
+}
+
+#navLogo {
+  width: 70px;
+  height: 50px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius:50%;
+}
+
+#logoutBtn {
+  background-color: blue;
+  color: white;
+  border: 1px solid white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right:40px;
+}
+
+#logoutBtn:hover {
+  background-color: white;
+  color: #333;
+}
+      
+  .card-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%; 
+  
+}
+
+.card {
+  width: 370px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 80px; 
+  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9f9;
+  transform: scale(1.09);
+}
+
+img {
+  width: 180px;
+  height: 180px;
+  margin-right: 10px; 
+  margin-left:20px;
+}
+
+.info {
+  flex: 1;
+}
+
+h2 {
+  margin: 0;
+}
+
+button {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin:10px;
+  margin-right:30px;
+}
+   
+.cartItems{
+  position:fixed;
+  top:150px;
+  left:20%;
+  width:50%;
+  height:50%;
+  background-color:rgba(0,0,0,0.1);
+  justify-content:center;
+  align-items:center;
+  
+  overflow:auto;    
+}
+  popup_p{
+     text-align:center;
+   }
+    </style>
+    <script>
+      
+     function addToCart(itemid,itemname,imageurl,price,qty)
+     {
+       var cartInfo=JSON.parse(localStorage.getItem('cart'))||[];
+       cartInfo.push({iid:itemid,iname:itemname,iurl:imageurl,iprice:price,iqty:qty});
+       localStorage.setItem('cart',JSON.stringify(cartInfo));
+      document.getElementById('count').innerText=cartInfo.length;
+     }
+     function selectedItems()
+     {
+       var maindata=document.getElementById('maindata');
+       var cartInfo=JSON.parse(localStorage.getItem('cart'))||[];
+       var cartItems=document.getElementById('cartItems');
+       var totalPrice=0;
+       cartItems.innerHTML='';
+       var button=document.createElement('button');
+       
+         button.onclick=function(){
+              closePopup();
+           };
+         
+       cartInfo.forEach(data=>{
+         var p=document.createElement('p');
+         p.className="popup_p"
+         var img=document.createElement('img');
+         var br=document.createElement('br');
+         img.src='static/'+data.iurl;
+         p.appendChild(img);
+         
+         p.append(data.iname+"\n");
+         
+         p.append(data.iprice+"\n");
+         
+         p.append(data.iqty);
+        
+         totalPrice=totalPrice+data.iprice;
+         
+         cartItems.appendChild(p);
+         //cartItems.appendChild(button);
+       });
+       if(cartInfo.length>0){
+        var placeOrderBtn=document.createElement('button');
+         placeOrderBtn.onclick=function(){
+              placeOrder();
+              localStorage.removeItem('cart');
+              document.getElementById('count').innerText="0";
+              closePopup();
+           };
+        }
+         var clearCartBtn=document.createElement('button');
+         clearCartBtn.onclick=function(){
+              clearCart();
+              closePopup();
+           };
+         clearCartBtn.textContent="Clear Cart";
+         button.textContent="Go Back";
+         if(cartInfo.length>0){
+          placeOrderBtn.textContent="Place Order";
+         }
+       cartItems.append("Total Price: "+totalPrice);
+       cartItems.appendChild(button);
+       if(cartInfo.length>0){
+        cartItems.appendChild(placeOrderBtn);
+       }
+       cartItems.appendChild(clearCartBtn);
+       maindata.style.display="none";
+       cartItems.style.display="block";
+     }
+
+     function closePopup(){
+      var cartItems=document.getElementById('cartItems'); 
+      cartItems.style.display="none";
+      var maindata=document.getElementById('maindata');
+      maindata.style.display="block";
+     }
+     
+     window.onload=function(){
+      localStorage.removeItem('cart');
+     }
+     
+     function clearCart(){
+       localStorage.removeItem('cart');
+        document.getElementById('count').innerText="0";
+     }
+     function placeOrder(){
+       var cartInfo=JSON.parse(localStorage.getItem('cart'))||[];
+       var itemIds=[];
+        cartInfo.forEach(data=>{
+           itemIds.push(data.iid);
+       });
+       const xhrObj=new XMLHttpRequest();
+        xhrObj.onreadystatechange=function(){
+      if(this.readyState==4&&this.status==200)
+       {
+         alert(this.responseText);
+         location.reload();
+        }
+       };
+       xhrObj.open('POST','/userorder',true);
+       xhrObj.setRequestHeader('Content-Type','application/json');
+       xhrObj.send(JSON.stringify(itemIds));
+     }
+    
+    </script>
+  </head>
+  <body><nav>
+      <div id="cartIcon">
+        
+        <img src="{{ url_for('static',filename='cart.jpg') }}" id="navlogo" onclick="selectedItems()">
+        <span id="count" id="logoutbtn" border="2px" style="color:white;font-size:30px;">0</span>
+        <!--<button onclick="selectedItems()" id="logoutBtn">selected items</button>-->
+        <!-- <button onclick="placeOrder()" id="logoutBtn">Place Order</button> --></div>
+        <center><p style="font-size:30px;">COFFEE STORE</p></center>
+        <a href="{{ url_for('logout') }}" id="logoutBtn">logout</a>
+      
+    </nav>
+    <hr>
+      <div id="cartItems" class="cartItems" style="display:none;"></div>
+      <div id="maindata" style="background-color:#ffe066;">
+      {% for data in record_dict %}
+      <div>
+        <br><br><br><br><br>
+        <center><h1>{{ data }}</h1></center>
+        {% set tuple_list=record_dict[data] %}
+        <div class="card-container">
+          {% for i in range(tuple_list[0]|length) %}
+            <div class="card">
+              <img src="{{ url_for('static', filename=tuple_list[4][i]) }}">
+              <div class="info">
+                <h2>{{ tuple_list[1][i] }}</h2>
+                <p>Price: {{ tuple_list[2][i] }}</p>
+                <p>Quantity Left: {{ tuple_list[3][i] }}</p>
+                <button id="{{ tuple_list[0][i] }}" onclick="addToCart(this.id, '{{ tuple_list[1][i] }}', '{{ tuple_list[4][i] }}', {{ tuple_list[2][i] }} , {{ tuple_list[3][i] }})">Add to Cart</button>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+   </div>
+  </body>
+
+</html>

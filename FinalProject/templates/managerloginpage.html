@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  div {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+
+  h1 {
+    color: #00ff26;
+  }
+
+  form {
+    margin-top: 20px;
+  }
+
+  table {
+    margin: auto;
+  }
+
+  table tr td {
+    padding: 5px;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+  }
+
+  input[type="submit"],
+  input[type="reset"] {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  input[type="submit"]:hover,
+  input[type="reset"]:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+  <div>
+    <h1>Manager Login Form</h1>
+    <form action="http://localhost:5000/managerlogin" method="POST">
+      <table border=0>
+        <tr>
+          <td>Email</td><td><input type="email" name="manageremail" required></td>
+        </tr>
+        <tr>
+          <td>Password</td><td><input type="password" name="managerpassword" required></td>
+        </tr>
+        <tr>
+          <td><input type="submit" value="Login"></td><td><input type="reset" value="Cancel"></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+  <script>
+    // You can add JavaScript actions here if needed
+  </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{%extends "managerheader.html" %}
+{% block content %}
+<script>
+  setInterval(function(){
+location.reload(); },5000);
+</script>
+<style> .card-container {
+  display: flex;
+  max-width: 100%; 
+  
+}
+ button{
+    font-size:20px;
+    padding:10px;
+    background-color:#9fc6c6;
+    border:none;
+  }
+.card {
+  width: 150px;
+  height: 220px;
+  display: flex;  
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 20px; 
+  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9f9;
+  transform: scale(1.09);
+}</style>
+ <script>
+   function deliverItems(str){
+      alert(str);
+      const xhrObj=new XMLHttpRequest();
+       xhrObj.open('POST','/updateorder',true);
+       xhrObj.setRequestHeader('Content-Type','application/json');
+       xhrObj.send(JSON.stringify(str));
+   }
+ </script>
+  <div><h1>Orders List</h1></div>
+  <div id="maindata">
+      {% for data in record_dict %}
+      <div>
+        <hr>
+        <center><h1>Order ID: {{ data }}</h1></center>
+        {% set tuple_list=record_dict[data] %}
+        <div class="card-container">
+         
+          {% for tpobj in tuple_list %}
+            <div class="card">
+              <div class="info">
+                <h2>Item Id: {{ tpobj[0] }}</h2>
+                <p>Name: {{ tpobj[1] }}</p>
+                <p>Category: {{ tpobj[2] }}</p>
+                <p>Price: {{ tpobj[3] }}</p>
+                <p>User Email: {{ tpobj[4] }}</p>
+                <p>Status: {{ tpobj[5] }}</p>
+              </div>
+            </div>
+          {% endfor %}
+          
+        </div>
+        <center><a href="{{ url_for('updateorder',q=data) }}"><button>Deliver</button></center></a>
+        <hr>
+      </div>
+    {% endfor %}
+    
+   </div>
+{% endblock %}

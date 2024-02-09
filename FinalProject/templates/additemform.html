@@ -1,0 +1,89 @@
+{%extends "managerheader.html" %}
+{% block content %}
+
+      <style>
+        .Hello {
+          padding: 20px;
+          width: 350px;
+          border: 2px solid #000;
+          border-radius: 15px;
+        }
+      
+        /* Style the preview card */
+        .preview-card {
+          padding: 20px;
+          width: 350px;
+          border: 2px solid #ccc;
+          border-radius: 15px;
+          margin-top: 20px;
+        }
+      </style>
+      
+      <div class="Hello">
+        <form action="/additem" id="inputForm" method="post" enctype="multipart/form-data">
+          <center><table>
+            <!-- Your form elements here -->
+            <tr>
+              <td>Item Name:</td>
+              <td><input type="text" name="ItemName"></td>
+            </tr>
+            <tr>
+              <td>Item Category:</td>
+              <td>
+                <select name="ItemCategory">
+                  <option value="espresso">ESPRESSO</option>
+                  <option value="sandwich">SANDWICH</option>
+                  <option value="pastry">PASTRY</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Item Price:</td>
+              <td><input type="text" name="Price"></td>
+            </tr>
+            <tr>
+              <td>Item Quantity:</td>
+              <td><input type="text" name="Quantity"></td>
+            </tr>
+            <tr>
+              <td>Upload image:</td>
+              <td><input type="file" name="Image"></td>
+            </tr>
+            <tr>
+              <td><input type="button" value="Preview" onclick="updatePreview()"></td>
+              <td><input type="submit" value="submit"> </td>
+            </tr>
+          </table>
+        </center>
+        </form>
+      </div>
+      
+      
+      <div class="preview-card" id="preview">
+      
+      </div>
+      
+      <script>
+        function updatePreview() {
+          const itemName = document.querySelector('input[name="ItemName"]').value;
+          const itemCategory = document.querySelector('select[name="ItemCategory"]').value;
+          const itemPrice = document.querySelector('input[name="Price"]').value;
+          const itemQuantity = document.querySelector('input[name="Quantity"]').value;
+          const img=document.querySelector('input[name="Image"]').value;
+      
+          const previewCard = document.getElementById('preview');
+          
+          previewCard.innerHTML = `
+            <h2>Preview:</h2>
+            <p><strong>Item Name:</strong> ${itemName}</p>
+            <p><strong>Item Category:</strong> ${itemCategory}</p>
+            <p><strong>Item Price:</strong> ${itemPrice}</p>
+            <p><strong>Item Quantity:</strong> ${itemQuantity}</p>
+            ${img}
+            
+          `;
+        }
+      </script>
+      
+  
+{% endblock %} 
